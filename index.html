@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-Assisted Backlog Refinement PoC</title>
+<style>
+:root{--bg:#f3f0e9;--card:#fffdf8;--ink:#262821;--muted:#62665e;--line:#d9d5cb;--accent:#526b5b;--soft:#e5ebe3;--warn:#f4e8cc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:980px;margin:auto;padding:28px 18px 60px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;color:var(--accent);font-weight:800}
+h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;max-width:760px;margin:.5rem 0 1rem}h2{font-size:1.2rem;margin:0 0 .8rem}p{margin:.35rem 0 1rem}.muted{color:var(--muted);font-size:.93rem}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:24px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 5px 20px #292b2208}
+label{display:block;font-weight:700;margin:14px 0 6px}textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fffefa;color:var(--ink);font:inherit;min-height:110px;resize:vertical}
+button{background:var(--accent);color:white;border:0;border-radius:10px;padding:12px 16px;font:inherit;font-weight:750;cursor:pointer;margin-top:14px}button:focus,textarea:focus{outline:3px solid #9fb5a4;outline-offset:2px}
+.notice{background:var(--warn);border-radius:12px;padding:13px 15px;font-size:.9rem}.tag{display:inline-block;background:var(--soft);padding:4px 9px;border-radius:999px;font-size:.78rem;font-weight:750}
+ul{padding-left:22px}li{margin:7px 0}.result{margin-top:20px}.hidden{display:none}.footer{border-top:1px solid var(--line);margin-top:28px;padding-top:18px}
+@media(max-width:720px){.layout{grid-template-columns:1fr}main{padding:22px 14px 40px}}
+</style>
+</head>
+<body><main>
+<div class="eyebrow">Personal learning project · PoC v1</div>
+<h1>AI-assisted backlog refinement</h1>
+<p style="font-size:1.12rem;max-width:760px">Explore how an AI critique can help a team spot unanswered questions before implementation — while keeping decisions with the people doing the work.</p>
+<div class="notice"><strong>Transparency:</strong> This interactive page displays illustrative, prewritten findings. It is not connected to a live AI model. Run the prompt in the repository with an approved AI tool to capture a genuine AI response.</div>
+<div class="layout">
+<section class="card">
+<h2>1. Backlog item</h2>
+<label for="story">User story</label>
+<textarea id="story">As a registered customer, I want to reset my password using my registered email address so that I can regain access to my account.</textarea>
+<label for="criteria">Acceptance criteria</label>
+<textarea id="criteria">1. Customer can request a password reset.
+2. A reset email is sent.
+3. Customer can set a new password.</textarea>
+<button id="run">Show illustrative critique</button>
+<p class="muted">Fictional example: e-commerce password reset.</p>
+</section>
+<section class="card">
+<h2>2. What to examine</h2>
+<ul>
+<li>Missing requirements and acceptance criteria</li>
+<li>Assumptions that need validation</li>
+<li>Edge cases and security considerations</li>
+<li>Dependencies and delivery risks</li>
+<li>Questions for Product Owner, developer, and tester</li>
+</ul>
+<p class="muted">AI output is a starting point for discussion, not a source of truth or an automatic readiness decision.</p>
+</section>
+</div>
+<section id="results" class="card result hidden" aria-live="polite">
+<span class="tag">Illustrative sample output</span>
+<h2 style="margin-top:12px">Potential gaps to validate</h2>
+<ul>
+<li>What happens if the email address is not registered?</li>
+<li>Does the reset link expire, and what is the expiry period?</li>
+<li>Can a reset link be reused?</li>
+<li>What password rules must be met?</li>
+<li>How should repeated reset requests be handled?</li>
+<li>What prevents account enumeration or unauthorized access?</li>
+</ul>
+<h2>Questions for refinement</h2>
+<ul>
+<li>What is the expected behavior for invalid or expired links?</li>
+<li>What password validation rules apply?</li>
+<li>Are rate limits and security controls required?</li>
+<li>What email delivery and response-time expectations apply?</li>
+</ul>
+<h2>Provisional assessment</h2>
+<p><strong>Needs clarification — illustrative judgment only.</strong> The Product Owner, development team, and relevant security expertise should validate the business rules and acceptance criteria before deciding readiness.</p>
+<p class="muted">Editing the story fields does not generate a new critique. These findings are fixed example content, not dynamically generated from the input.</p>
+</section>
+<div class="footer muted">
+<strong>Scope:</strong> No API connection, backend, or production integration. No performance claims are made. Inspired by the general workflow concept in SAFe Connect's “AI Toolsday: Real AI, Real Agile, Real Workflows”; this is an independent personal PoC, not an official SAFe product.
+</div>
+</main>
+<script>
+document.getElementById('run').addEventListener('click',function(){
+ const s=document.getElementById('story').value.trim();
+ const c=document.getElementById('criteria').value.trim();
+ if(!s||!c){alert('Please enter a user story and acceptance criteria.');return;}
+ document.getElementById('results').classList.remove('hidden');
+ document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+});
+</script>
+</body></html>
